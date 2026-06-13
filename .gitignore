@@ -1,0 +1,20 @@
+# Datasets and large binaries — not for git
+Dataset/
+Dataset1/
+Dataset2/
+Dataset3/
+Dataset4/
+*.mat
+
+# Generated outputs
+Final_Segmentation_Results_*/
+forgery_results/
+forgery_results_v2/
+outputFolder/
+html/
+resources/
+Results/*.png
+
+# MATLAB autosave / run logs
+*.asv
+verify_run*.log
