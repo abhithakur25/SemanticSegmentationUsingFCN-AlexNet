@@ -1,0 +1,8 @@
+MATLAB 25.2.0.2998904 (R2025b)
+GPU_COUNT=0
+Computer_Vision_Toolbox_License=1
+Deep_Learning_Toolbox_License=1
+Image_Processing_Toolbox_License=1
+unetLayers: available
+pixelLabelImageDatastore: available
+=> Host is CPU-only; all required toolboxes licensed.

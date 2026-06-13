@@ -1,0 +1,15 @@
+Found 3986 paired images.
+[VERIFY] Subsampled to 80 images.
+Train: 64 | Validation: 16
+Training U-Net (this may take time)...
+Training on single CPU.
+Initializing input data normalization.
+| Epoch | Iter | Elapsed  | MiniBatchAcc | ValAcc | MiniBatchLoss | ValLoss | LR     |
+|   1   |   1  | 00:00:12 |    86.67%    | 17.37% |    1.7888     | 12.4441 | 0.0005 |
+|   1   |   8  | 00:01:31 |    95.73%    | 87.88% |    0.6756     |  1.8840 | 0.0005 |
+Training finished: Max epochs completed.
+Saved 5 sample Binary & Overlay images.
+Per-class pixel metrics (verification, deliberately under-trained: 1 epoch / 160x160 / CPU):
+  Background  P 0.8812  R 0.9972  F1 0.9356  IoU 0.8790
+  Forged      P 0.1537  R 0.0037  F1 0.0073  IoU 0.0037
+Global pixel accuracy: 0.8791

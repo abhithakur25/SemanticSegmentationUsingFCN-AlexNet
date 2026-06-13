@@ -1,0 +1,15 @@
+Model: Final_Segmentation_Results_Tuned/netSeg_final.mat (U-Net, EncoderDepth 4, 352x480)
+Training iterations: 4776
+FinalTrainAccuracy      = 99.0496 %
+MeanTrainAccuracy       = 92.4937 %
+FinalTrainLoss          = 0.0459
+FinalValidationAccuracy = 94.7467 %
+FinalValidationLoss     = 0.1525
+Pixel-level metrics (validation):
+  Background  P 0.9706  R 0.9712  F1 0.9709  IoU 0.9435
+  Forged      P 0.7329  R 0.7284  F1 0.7307  IoU 0.5756
+Global pixel accuracy = 0.9475
+Confusion matrix (pixels):
+              Pred_Background   Pred_Forged
+  Background     120684217         3574122
+  Forged           3656118         9807143

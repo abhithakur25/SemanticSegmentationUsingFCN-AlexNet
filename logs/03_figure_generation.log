@@ -1,0 +1,4 @@
+Confusion matrix figure saved.
+Inference done on 40 images, 6758400 pixels.
+AUC(ROC)=0.9363  AUC(PR)=0.7003
+All document figures saved to Documentation/figures
