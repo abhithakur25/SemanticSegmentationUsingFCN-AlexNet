@@ -281,11 +281,14 @@ flowchart TD
     E --> F
     F --> G{"Train / Validation split<br/>(80/20 or 60/40)"}
     G -->|train| H["Network construction"]
-    subgraph H ["Model"]
+    subgraph MODEL ["Model architectures"]
       H1["FCN-AlexNet:<br/>AlexNet encoder → fc6/fc7 as conv<br/>→ score_fr 1x1 → transposed-conv up-sample<br/>→ crop → softmax → pixelClassification"]
       H2["U-Net:<br/>depth-4 encoder–decoder<br/>with skip connections"]
     end
-    H --> I["trainNetwork<br/>(SGDM / Adam, augmentation)"]
+    H --> H1
+    H --> H2
+    H1 --> I["trainNetwork<br/>(SGDM / Adam, augmentation)"]
+    H2 --> I
     I --> J["Trained model netSeg_final.mat"]
     G -->|validation| K["semanticseg inference<br/>(class map + Forged score)"]
     J --> K
