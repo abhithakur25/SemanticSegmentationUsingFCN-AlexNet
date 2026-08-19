@@ -17,16 +17,69 @@ modern PyTorch backbones (ResNet-50, MobileNet-V2/V3, ConvNeXt, EfficientNet, De
 | Train / Val accuracy | 99.05 % / 94.75 % |
 | Train / Val loss | 0.046 / 0.153 |
 
+This was superseded by a transfer-learned DeepLabV3+ run on the full dataset —
+see [Improved U-Net / DeepLabV3+ experiments](#improved-unet--deeplabv3-experiments)
+below, **including the caveat that qualifies its higher score**.
+
 ## Repository layout
 
 | Path | Contents |
 |---|---|
-| `*.m` | MATLAB pipelines — `fcnAlexNetExample.m` (FCN-AlexNet), `forgery_detection_UNet_Segmentation_Final_*Tuned.m` (U-Net), `forgery_models_compare_gpu_final_v2.m`, `GT_Reshape.m`/`reshape1.m` (mask synthesis), `apply_binary_mask_overlay.m`, `PlotBarGraph.m`, `gen_doc_figures.m` (result figures). |
+| `*.m` | MATLAB pipelines — `fcnAlexNetExample.m` (FCN-AlexNet), `forgery_detection_UNet_Segmentation_Final_*Tuned.m` (original tuned U-Net), `forgery_detection_UNet_Segmentation_Improved.m` (rewritten, multi-variant U-Net/DeepLabV3+ pipeline — see below), `forgery_models_compare_gpu_final_v2.m`, `GT_Reshape.m`/`reshape1.m` (mask synthesis), `apply_binary_mask_overlay.m`, `PlotBarGraph.m`, `gen_doc_figures.m` (result figures). |
 | `*.py`, `*.pyx` | PyTorch backbones & multi-model comparison (GPU-oriented). |
-| `Documentation/` | Full technical **report** (`Semantic_Segmentation_FCN_AlexNet_Report.md`) + figures (confusion matrix, ROC, PR/AUC) + its README. |
+| `Documentation/` | Full technical **report** (`Semantic_Segmentation_FCN_AlexNet_Report.md`) + figures (confusion matrix, ROC, PR/AUC) + its README. `Documentation/article/` holds a separate, fully-verified **research article** (`.docx`) covering the improved experiments below, plus the Python/MATLAB scripts and raw measurement output that generated every number and figure in it. |
+| `Improved_Segmentation_Results_{baseline,deeplab,transfer}/` | Saved metrics, figures, and sample predictions from the three variants of `forgery_detection_UNet_Segmentation_Improved.m` (trained network `.mat` files are gitignored — see [Not included](#not-included-size)). |
 | `SampleData/` | 321 image/mask pairs (~87 MB) sampled from Dataset4 for demonstration. |
 | `logs/` | Real execution logs (environment probe, U-Net verification run, figure generation, tuned-model training summary). |
 | `CLAUDE.md` | Repository layout, run notes, path/robustness history. |
+
+## Improved U-Net / DeepLabV3+ experiments
+
+`forgery_detection_UNet_Segmentation_Improved.m` is a from-scratch rewrite of the
+tuned U-Net script, aimed at two weaknesses the original showed (Forged-class
+precision ≈ recall — i.e. boundary/localisation error, not class imbalance — and
+a ~4-point train/val accuracy gap, i.e. overfitting):
+
+* Ported to the MATLAB R2026a API (`unet()` + `trainnet()`, since `unetLayers`/
+  `deeplabv3plusLayers` were removed).
+* Geometric augmentation (reflection/rotation/translation/scale) applied
+  identically to image and mask.
+* Soft-Dice loss (optimises overlap directly, weights classes by area) as an
+  alternative to cross-entropy.
+* LR decay, early stopping, `OutputNetwork='best-validation-loss'`.
+* A proper 70/15/15 train/val/**test** split — the test set is untouched until
+  final evaluation (the original tuned script reported its headline metrics on
+  the validation split it was monitored against).
+* Consistent `>127` mask binarisation for both training and evaluation (the
+  original mixed Otsu and `>127`, which disagreed on 27 % of boundary pixels).
+* An optional DeepLabV3+ / ResNet-18 backbone in place of the from-scratch U-Net.
+
+Run it as `forgery_detection_UNet_Segmentation_Improved`, or set
+`VARIANT = 'baseline' | 'improved' | 'deeplab' | 'transfer'` first to pick a
+preset (all four share the same seed and splits). Results land in
+`Improved_Segmentation_Results_<VARIANT>/`.
+
+| Variant | Data | Architecture / loss | Forged F1 | Forged IoU |
+|---|---|---|---|---|
+| `baseline` | `SampleData/` (321 pairs) | U-Net, cross-entropy, no augmentation — reproduces the original recipe as a control | 0.0002 | 0.0001 |
+| `deeplab` | `SampleData/` (321 pairs) | DeepLabV3+/ResNet-18, soft-Dice, augmented | 0.136 | 0.073 |
+| `transfer` | Full 47,824-pair dataset | DeepLabV3+/ResNet-18 (ImageNet-pretrained), Dice+CE, augmented, 10 epochs | **0.944** | **0.893** |
+
+`baseline` and `deeplab` are small-data ablations on the 321-pair `SampleData/`
+included in this repo (`baseline` collapses because 321 images is too little to
+learn the Forged class from scratch with no augmentation — that is itself the
+point of the comparison). `transfer` is the real result, trained on the full
+Dataset4-derived corpus and evaluated on its own held-out 15 % test split.
+
+**Caveat on the `transfer` score:** a duplication audit found the dataset is
+video-derived — of 47,824 frames, only 14,457 have a distinct ground-truth
+mask, and 90.4 % of test frames are bit-for-bit identical to a training frame's
+mask (94.6 % near-duplicate by image hash). The 0.944 F1 therefore measures
+within-corpus localisation against material very close to the training data,
+not generalisation to unseen source footage. Re-partitioning by source clip
+(rather than frame) is the natural next step. Full detail, methodology, and 20
+literature references are in
+[`Documentation/article/`](Documentation/article/Image_Forgery_Localisation_DeepLabV3plus_Article.docx).
 
 ## Not included (size)
 
