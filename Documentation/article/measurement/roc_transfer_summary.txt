@@ -1,0 +1,14 @@
+N_images = 1200
+N_pixels = 207360000
+AUC = 0.99824014
+AUC_PR = 0.98702877
+bestF1 = 0.94520675
+bestF1_thr = 0.498250
+bestMCC = 0.94014566
+bestMCC_thr = 0.512850
+MCC_at_half = 0.94013917
+F1_at_half = 0.94520185
+precision_at_half = 0.94487309
+sensitivity = 0.94553084
+specificity = 0.99490527
+prevalence = 0.08454584

@@ -1,0 +1,14 @@
+train_n_images = 800
+train_globalAcc = 0.99055474
+train_forged_P = 0.94423128
+train_forged_R = 0.95088521
+train_forged_F1 = 0.94754657
+train_forged_IoU = 0.90032161
+train_cm = [125140742 696557;609156 11793545]
+val_n_images = 800
+val_globalAcc = 0.99074881
+val_forged_P = 0.94319472
+val_forged_R = 0.94648356
+val_forged_F1 = 0.94483627
+val_forged_IoU = 0.89544044
+val_cm = [126008837 659617;619268 10952278]

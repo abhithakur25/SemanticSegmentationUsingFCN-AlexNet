@@ -18,3 +18,6 @@ Results/*.png
 # MATLAB autosave / run logs
 *.asv
 verify_run*.log
+
+# Office lock files
+~$*

@@ -1,0 +1,127 @@
+===== VARIANT baseline =====
+vars in PixelMetrics: M, T, bestArea, cfg, cm, sampleInfo, trainSecs
+CM (rows=true Bg,Fg; cols=pred Bg,Fg):
+  7858722 843
+  434800 35
+CM total pixels: 8294400
+globalAcc = 0.9474774547
+precision = [0.9475735399 0.03986332574]
+recall    = [0.9998927422 8.049030092e-05]
+f1        = [0.9730303564 0.0001606562118]
+IoU       = [0.947477233 8.033455901e-05]
+bestArea (minArea) = 0
+trainSecs = 2082.28 (34.70 min, 0.58 h)
+sample names: GT_1112, GT_1070, GT_1004, GT_1243, GT_1101
+cfg.dataFolder = G:\Current_Work\SemanticSegmentationUsingFCN-AlexNet\SampleData\Images
+cfg.labelFolder = G:\Current_Work\SemanticSegmentationUsingFCN-AlexNet\SampleData\Labels
+cfg.inputSize = [352 480 3]
+cfg.encoderDepth = 4
+cfg.classNames = Background|Forged
+cfg.miniBatch = 8
+cfg.seed = 42
+cfg.splits = [0.7 0.15 0.15]
+cfg.loss = crossentropy
+cfg.augment = 0
+cfg.maxEpochs = 12
+cfg.lrSchedule = none
+cfg.initialLR = 0.0005
+cfg.postProcess = 0
+cfg.resultsFolder = G:\Current_Work\SemanticSegmentationUsingFCN-AlexNet\Improved_Segmentation_Results_baseline
+netSeg file vars: cfg(struct) info(deep.TrainingInfo) netSeg(dlnetwork) teIdx(double) trIdx(double) vaIdx(double) 
+split sizes: train 225 | val 48 | test 48
+TrainingHistory rows: 336; vars: Iteration, Epoch, LearnRate, Loss
+ValidationHistory rows: 13; vars: Iteration, Loss
+
+===== VARIANT deeplab =====
+vars in PixelMetrics: M, T, bestArea, cfg, cm, sampleInfo, trainSecs
+CM (rows=true Bg,Fg; cols=pred Bg,Fg):
+  7504934 354631
+  377222 57613
+CM total pixels: 8294400
+globalAcc = 0.9117654080
+precision = [0.9521422819 0.1397546113]
+recall    = [0.954879055 0.1324939345]
+f1        = [0.9535087047 0.1360274543]
+IoU       = [0.9111482426 0.07297717698]
+bestArea (minArea) = 256
+trainSecs = 561.98 (9.37 min, 0.16 h)
+sample names: GT_1112, GT_1070, GT_1004, GT_1243, GT_1101
+cfg.dataFolder = G:\Current_Work\SemanticSegmentationUsingFCN-AlexNet\SampleData\Images
+cfg.labelFolder = G:\Current_Work\SemanticSegmentationUsingFCN-AlexNet\SampleData\Labels
+cfg.inputSize = [352 480 3]
+cfg.encoderDepth = 4
+cfg.classNames = Background|Forged
+cfg.miniBatch = 8
+cfg.seed = 42
+cfg.splits = [0.7 0.15 0.15]
+cfg.arch = deeplabv3plus-resnet18
+cfg.loss = soft-dice
+cfg.augment = 1
+cfg.maxEpochs = 30
+cfg.lrSchedule = piecewise
+cfg.initialLR = 0.0001
+cfg.postProcess = 1
+cfg.resultsFolder = G:\Current_Work\SemanticSegmentationUsingFCN-AlexNet\Improved_Segmentation_Results_deeplab
+netSeg file vars: cfg(struct) info(deep.TrainingInfo) netSeg(dlnetwork) teIdx(double) trIdx(double) vaIdx(double) 
+split sizes: train 225 | val 48 | test 48
+TrainingHistory rows: 728; vars: Iteration, Epoch, LearnRate, Loss
+ValidationHistory rows: 27; vars: Iteration, Loss
+
+===== VARIANT improved =====
+(no PixelMetrics_improved.mat)
+
+===== VARIANT transfer =====
+vars in PixelMetrics: M, T, bestArea, cfg, cm, sampleInfo, trainSecs
+CM (rows=true Bg,Fg; cols=pred Bg,Fg):
+  1128511712 6148140
+  5672571 99161977
+CM total pixels: 1239494400
+globalAcc = 0.9904632800
+precision = [0.9949985456 0.9416187146]
+recall    = [0.9945815127 0.9458902518]
+f1        = [0.9947899854 0.9437496498]
+IoU       = [0.989633978 0.8934904965]
+bestArea (minArea) = 0
+trainSecs = 31410.88 (523.51 min, 8.73 h)
+sample names: R6_3020, CI_8876, R10_3094, R6_2400, CI_13779
+cfg.dataFolder = G:\Current_Work\Semantic Segmentation Using FCN-AlexNet1\Dataset\Images
+cfg.labelFolder = G:\Current_Work\Semantic Segmentation Using FCN-AlexNet1\Dataset\Lables
+cfg.inputSize = [352 480 3]
+cfg.encoderDepth = 4
+cfg.classNames = Background|Forged
+cfg.miniBatch = 8
+cfg.seed = 42
+cfg.splits = [0.7 0.15 0.15]
+cfg.valMonitorCap = 1000
+cfg.valTuneCap = 1000
+cfg.checkpoint = 0
+cfg.verboseEvery = 200
+cfg.maxImages = Inf
+cfg.perEpochResults = 1
+cfg.lrDropPeriod = 5
+cfg.lrDropFactor = 0.3
+cfg.patience = 4
+cfg.arch = deeplabv3plus-resnet18
+cfg.loss = dice-ce
+cfg.augment = 1
+cfg.maxEpochs = 10
+cfg.lrSchedule = piecewise
+cfg.initialLR = 0.0001
+cfg.postProcess = 1
+cfg.resultsFolder = G:\Current_Work\SemanticSegmentationUsingFCN-AlexNet\Improved_Segmentation_Results_transfer
+netSeg file vars: cfg(struct) ep(double) info(struct) netSeg(dlnetwork) teIdx(double) trIdx(double) vaIdx(double) 
+split sizes: train 33477 | val 7174 | test 7173
+no TrainingHistory (Unrecognized field name "TrainingHistory".)
+no ValidationHistory (Unrecognized field name "ValidationHistory".)
+
+===== roc_data.mat =====
+vars: AUC, AUC_PR, FPRs, PREs, RECs, TPRs, cm
+  AUC: double [1 1]
+     value = 0.9362983656
+  AUC_PR: double [1 1]
+     value = 0.7002744982
+  FPRs: double [1 500]
+  PREs: double [1 500]
+  RECs: double [1 500]
+  TPRs: double [1 500]
+  cm: double [2 2]

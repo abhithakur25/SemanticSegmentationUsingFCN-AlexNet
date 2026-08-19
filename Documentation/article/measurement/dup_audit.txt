@@ -1,0 +1,8 @@
+distinct_masks = 14457
+total_frames = 47824
+frames_with_shared_mask = 47824
+test_frames_mask_in_train = 6486
+test_frames_total = 7173
+test_frames_mask_in_train_pct = 90.4224
+test_frames_near_dup_image_in_train = 6787
+test_frames_near_dup_pct = 94.6187
